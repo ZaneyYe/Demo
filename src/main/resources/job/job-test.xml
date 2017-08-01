@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:batch="http://www.springframework.org/schema/batch"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch.xsd">
+
+    <import resource="job-context.xml" />
+    <import resource="job.xml"/>
+
+    <batch:job id="baseJob" abstract="true">
+        <batch:listeners>
+            <batch:listener ref="baseListener"></batch:listener>
+        </batch:listeners>
+    </batch:job>
+
+    <bean id="baseListener" class="batch.BaseListener"></bean>
+
+    <batch:job id="childJob" parent="baseJob">
+        <batch:step id="cadreStep">
+            <batch:tasklet transaction-manager="transactionManager" allow-start-if-complete="true">
+                <batch:chunk reader="cadreReader" writer="cadreWriter" processor="cadreProcess" commit-interval="2">
+                </batch:chunk>
+                <batch:transaction-attributes isolation="DEFAULT" propagation="REQUIRED" timeout="3000" />
+                <batch:no-rollback-exception-classes>
+                    <batch:include class="java.lang.NullPointerException"></batch:include>
+                    <batch:include class="org.springframework.batch.item.validator.ValidationException"></batch:include>
+                </batch:no-rollback-exception-classes>
+            </batch:tasklet>
+        </batch:step>
+        <batch:listeners merge="true">
+            <batch:listener ref="childJobListener"></batch:listener>
+        </batch:listeners>
+        <batch:validator ref="parameterValidator"></batch:validator>
+    </batch:job>
+
+    <bean id="childJobListener" class="batch.ChildJobListener"></bean>
+
+    <bean id="parameterValidator" class="org.springframework.batch.core.job.DefaultJobParametersValidator">
+        <property name="requiredKeys">
+           <set>
+               <value>date</value>
+           </set>
+        </property>
+        <property name="optionalKeys">
+            <set>
+                <value>name</value>
+            </set>
+        </property>
+    </bean>
+
+
+</beans>

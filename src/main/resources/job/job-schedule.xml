@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:batch="http://www.springframework.org/schema/batch"
+       xmlns:task="http://www.springframework.org/schema/task"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch.xsd
+       http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
+
+    <import resource="job-context.xml" />
+
+    <task:scheduler id="scheduler" pool-size="10"></task:scheduler>
+
+    <task:scheduled-tasks scheduler="scheduler">
+        <task:scheduled ref="schedulerTask" method="launch" fixed-rate="5000"/>
+    </task:scheduled-tasks>
+
+    <bean id="schedulerTask" class="batch.SchedulerTask">
+        <property name="jobLauncher" ref="jobLauncher" />
+        <property name="desJob" ref="seduJob"></property>
+    </bean>
+
+    <batch:job id="seduJob">
+        <batch:step id="firstStep">
+            <batch:tasklet ref="seduJobTask" method="run" transaction-manager="transactionManager"></batch:tasklet>
+        </batch:step>
+    </batch:job>
+
+    <bean id="seduJobTask" class="batch.SeduJobTask"></bean>
+</beans>
