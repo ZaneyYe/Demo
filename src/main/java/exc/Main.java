@@ -7,10 +7,10 @@ package exc;
 public class Main {
 
 	public static void main(String[] args){
-//		System.out.println(RunExc.add());
+		System.out.println(RunExc.add());
 //		System.out.println(RunExc.run());
-		m1();
-		m2();
+//		m1();
+//		m2();
 	}
 
 	public static void m1(){

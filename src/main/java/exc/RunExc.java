@@ -26,11 +26,11 @@ public class RunExc {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-//			return  -1;
-			a = 9;
+			return  -1;
+//			a = 9;
 //			return a;
 		}
 //		return 0;//不能到达
-		return a;
+//		return a;
 	}
 }

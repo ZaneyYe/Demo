@@ -10,9 +10,12 @@ public class Main {
 
 	public static void main(String[] args){
 		ForterCar forterCar = new ForterCar();
-		CarProxy poroxyHandler = new CarProxy(forterCar);
-		Car car = (Car) Proxy.newProxyInstance(forterCar.getClass().getClassLoader(), forterCar.getClass().getInterfaces(), poroxyHandler);
-		car.run();
+//		CarProxy poroxyHandler = new CarProxy(forterCar);
+//		Car car = (Car) Proxy.newProxyInstance(forterCar.getClass().getClassLoader(), forterCar.getClass().getInterfaces(), poroxyHandler);
+//		car.run();
+		LogHandler logHandler = new LogHandler(forterCar);
+		Car c = (Car) Proxy.newProxyInstance(forterCar.getClass().getClassLoader(), forterCar.getClass().getInterfaces(),logHandler);
+		c.run();
 	}
 
 }

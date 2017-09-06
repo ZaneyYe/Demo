@@ -25,4 +25,8 @@ public class Tool {
 		}
 		return clone;
 	}
+
+//	public void Convert(String str){
+//
+//	}
 }
