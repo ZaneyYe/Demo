@@ -12,9 +12,11 @@ public class ChineseSort {
 
 	public static void main(String[] args){
 		String[] names = new String[]{"张三","李四","王五"};
-		Collator c = Collator.getInstance(Locale.CHINA);
+		Collator c  = Collator.getInstance(Locale.CHINA);
 		Arrays.sort(names,c);
 		System.out.println(Arrays.asList(names));
+
+
 	}
 
 }

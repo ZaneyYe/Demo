@@ -9,6 +9,10 @@ import java.net.URL;
  */
 public class ResourcePathTest {
 
+	public static String hello(){
+		return "invoke sb";
+	}
+
 //	@Test
 	public void test1() throws URISyntaxException {
 		URL url = ResourcePathTest.class.getResource("");

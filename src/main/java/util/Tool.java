@@ -1,6 +1,8 @@
 package util;
 
 import java.io.*;
+import java.sql.Timestamp;
+import java.util.Date;
 
 /**
  * Created by yzy on 2017/06/14 上午 9:59.
@@ -23,10 +25,15 @@ public class Tool {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+
+		//
 		return clone;
 	}
 
-//	public void Convert(String str){
-//
-//	}
+	public static void main(String[] args){
+		Date now = new Date();
+		System.out.println(now);
+		Timestamp timestamp = new Timestamp(now.getTime());
+		System.out.println(timestamp);
+	}
 }
